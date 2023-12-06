@@ -9,5 +9,21 @@ There is no automated test for this one, this is more for you to understand time
 */
 
 function calculateTime(n) {
-    return 0.01;
+    let startTime = new Date();
+    let sum = 0;
+
+    for(let i=0; i<n; i++)
+        sum += i;
+
+    const endTime = new Date();
+    return (endTime-startTime) / 1000; // converting milliseconds to seconds
 }
+
+// Test
+// const t1 = calculateTime(100);
+// const t2 = calculateTime(100000);
+// const t3 = calculateTime(1000000000);
+
+// console.log(`Time for summing 1 to 100: ${t1} seconds`);
+// console.log(`Time for summing 1 to 100000: ${t2} seconds`);
+// console.log(`Time for summing 1 to 1000000000: ${t3} seconds`);
