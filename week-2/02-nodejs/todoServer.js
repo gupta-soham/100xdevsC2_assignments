@@ -55,7 +55,7 @@
   
   app.get('/todos/:id', (req, res) => {
     const todo = todos.find(t => t.id === req.params.id);
-    if(!todo) {
+    if (!todo) {
       return res.status(404).json({ error: 'Todo not found' }); 
     }
     res.status(200).json(todo);
@@ -66,7 +66,7 @@
       id: uuidv4(),
       title: req.body.title,
       description: req.body.description
-    }
+    };
     todos.push(newTodo);
     res.status(201).json(newTodo);
   });
@@ -92,7 +92,7 @@
   });
 
   // for all other routes, return 404
-  app.use((req, res) => {
+  app.use((req, res, next) => {
     res.status(404).json({ error: 'Route not found' });
   });
 
