@@ -11,6 +11,22 @@ const app = express();
 // You have been given a numberOfRequestsForUser object to start off with which
 // clears every one second
 
+app.use(function(req, res, next) {
+  const uID = req.headers["user-id"];
+  if(numberOfRequestsForUser[uID]) {
+    numberOfRequestsForUser[uID] += 1;
+    if(numberOfRequestsForUser[uID] > 5) {
+      res.status(404).send("Too many requests to the server!");
+    } else {
+      next();
+    }
+  }
+  else {
+    numberOfRequestsForUser[uID] = 1;
+    next();
+  }
+});
+
 let numberOfRequestsForUser = {};
 setInterval(() => {
     numberOfRequestsForUser = {};
