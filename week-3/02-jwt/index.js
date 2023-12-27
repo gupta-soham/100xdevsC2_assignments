@@ -56,7 +56,8 @@ function verifyJwt(token) {
  *                         Returns false if the token is not a valid JWT format.
  */
 function decodeJwt(token) {
-    if(!jwt.decode(token, jwtPassword, algorithms='HS256')) // 'HS256' for HMAC with SHA-256 [default value]
+    // if(!jwt.decode(token, jwtPassword, algorithms='HS256')) // 'HS256' for HMAC with SHA-256 [default value]
+    if(!jwt.decode(token)) 
         return false;
     return true;
 }
