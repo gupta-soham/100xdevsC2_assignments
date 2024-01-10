@@ -17,6 +17,7 @@ router.post('/signup', async (req, res) => {
         password: password
     })
 
+
     res.json({
         message: 'Admin created successfully'
     })
