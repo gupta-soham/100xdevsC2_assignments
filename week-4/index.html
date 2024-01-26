@@ -7,16 +7,22 @@
     let todoState = [];
     let oldTodoState = [];
 
-    function addTodoToDom() {
-      
+    function addTodoToDom(todo) {
+      const todoElement = document.createElement("div");
+      todoElement.innerHTML = `<strong>${todo.title}</strong>: ${todo.description}`;
+      document.getElementById("todos").appendChild(todoElement);
     }
 
     function removeTodoFromDom(todo) {
-      
+      const todoElement = document.getElementById(`todo_${todo.id}`);
+      if (todoElement)
+        todoElement.remove();
     }
 
     function updateTodoInDom(oldTodo, newTodo) {
-        
+      const todoElement = document.getElementById(`todo_${oldTodo.id}`);
+      if (todoElement)
+        todoElement.innerHTML = `<strong>${newTodo.title}</strong>: ${newTodo.description}`;
     }
 
     function updateState(newTodos) {
@@ -25,25 +31,39 @@
       // 1. added
       // 2. deleted
       // 3. updated
-      const added = [];
-      const deleted = [];
-      const updated = [];
+      const added = newTodos.filter(newTodo => !oldTodoState.some(oldTodo => oldTodo.id === newTodo.id));
+      const deleted = oldTodoState.filter(oldTodo => !newTodos.some(newTodo => newTodo.id === oldTodo.id));
+      const updated = newTodos.filter(newTodo => {
+        const correspondingOldTodo = oldTodoState.find(oldTodo => oldTodo.id === newTodo.id);
+        return correspondingOldTodo && correspondingOldTodo.title !== newTodo.title;
+      });
+
       // calculate these 3 arrays
       // call addTodo, removeTodo, updateTodo functions on each of the
       // elements
-      oldTodoState = newTodos;
+      added.forEach(addTodoToDom);
+      deleted.forEach(removeTodoFromDom);
+      updated.forEach(newTodo => {
+        const correspondingOldTodo = oldTodoState.find(oldTodo => oldTodo.id === newTodo.id);
+        updateTodoInDom(correspondingOldTodo, newTodo);
+      });
+
+      oldTodoState = newTodos.slice(); // Update the oldTodoState
     }
 
     function addTodo() {
       const title = document.getElementById("title").value;
       const description = document.getElementById("description").value;
-      todoState.push({
+      const newTodo = {
         title: title,
         description: description,
         id: globalId++,
-      })
+      };
+      todoState.push(newTodo);
       updateState(todoState);
     }
+
+    console.log(newTodo);
   </script>
 </head>
 
