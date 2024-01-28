@@ -50,13 +50,14 @@ BusinessCard.propTypes = {
 
   const styles = {
     card: {
-      border: '1px solid #ddd',
-      borderRadius: '8px',
+      borderRadius: '18px',
+      background: 'linear-gradient(145deg, #cacaca, #f0f0f0)',
+      boxShadow:  '32px 32px 65px #bebebe, -32px -32px 65px #ffffff',
       padding: '20px',
       margin: '20px',
       width: '350px',
       height: '260px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      // boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
       backgroundColor: '#f8f9fa'
     },
     name: {
