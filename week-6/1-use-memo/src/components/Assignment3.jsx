@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useReducer } from 'react';
 // You have been given a list of items you shopped from the grocery store
 // You need to calculate the total amount of money you spent
 
@@ -12,7 +13,38 @@ export const Assignment3 = () => {
     ]);
 
     // Your code starts here
-    const totalValue = 0;
+
+    const calculateTotalValue = (items) => {
+        return items.reduce((total, item) => total + item.value, 0);
+    };
+
+    const totalValue = useMemo(() => {
+        // let val = 0;
+        // for(let i=0; i<items.length; i++) {
+        //     val += items[i].value;
+        // }
+        // return val;
+
+        return calculateTotalValue(items);
+    }, [items]);
+
+    // Using Reducer 👇 
+    const reducer = (state, action) => { // The reducer function should be declared before using it in the useReducer hook
+        switch (action.type) {
+            case 'total':
+                return calculateTotalValue(items);
+                default:
+                    return state;
+                }
+            }
+            
+    const [totVal, dispatch] = useReducer(reducer, 0);
+    
+    // Dispatch action to calculate total value
+    useEffect(() => {
+        dispatch({ type: 'total' });
+    }, [items]);
+
     // Your code ends here
     return (
         <div>
@@ -21,7 +53,7 @@ export const Assignment3 = () => {
                     <li key={index}>{item.name} - Price: ${item.value}</li>
                 ))}
             </ul>
-            <p>Total Value: {totalValue}</p>
+            <p>Total Value: ${totVal}</p>
         </div>
     );
 };
